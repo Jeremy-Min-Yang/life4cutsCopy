@@ -1,0 +1,1 @@
+I wanted to create an app that mimics the photo booths we can see in places such as 인생넷컷.
