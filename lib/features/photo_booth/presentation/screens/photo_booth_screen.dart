@@ -24,32 +24,33 @@ class _PhotoBoothScreenState extends ConsumerState<PhotoBoothScreen> {
         child: photoBoothState.when(
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error) => Center(child: Text('Error: $error')),
-          data: (data) => _buildContent(data),
+          data: (photosPaths, isPhotoGridComplete, isCameraReady) =>
+              _buildContent(photosPaths, isPhotoGridComplete, isCameraReady),
         ),
       ),
     );
   }
 
-  Widget _buildContent(PhotoBoothData data) {
+  Widget _buildContent(
+      List<String> photosPaths, bool isPhotoGridComplete, bool isCameraReady) {
     return Column(
       children: [
-        if (!data.isPhotoGridComplete)
+        if (!isPhotoGridComplete)
           const Expanded(child: CameraPreviewWidget())
         else
           const Expanded(child: PhotoGridWidget()),
-        _buildActionButton(data),
+        _buildActionButton(isPhotoGridComplete),
       ],
     );
   }
 
-  Widget _buildActionButton(PhotoBoothData data) {
+  Widget _buildActionButton(bool isPhotoGridComplete) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: ElevatedButton(
         onPressed: () =>
             ref.read(photoBoothControllerProvider.notifier).takePhoto(),
-        child:
-            Text(data.isPhotoGridComplete ? 'Customize Photos' : 'Take Photo'),
+        child: Text(isPhotoGridComplete ? 'Customize Photos' : 'Take Photo'),
       ),
     );
   }

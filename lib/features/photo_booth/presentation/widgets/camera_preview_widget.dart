@@ -13,7 +13,7 @@ class CameraPreviewWidget extends ConsumerWidget {
     return photoBoothState.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error) => Center(child: Text('Camera Error: $error')),
-      data: (data) => data.isCameraReady
+      data: (photosPaths, isPhotoGridComplete, isCameraReady) => isCameraReady
           ? AspectRatio(
               aspectRatio: 3 / 4,
               child: CameraPreview(

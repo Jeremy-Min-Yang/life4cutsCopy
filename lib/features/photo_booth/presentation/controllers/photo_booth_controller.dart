@@ -34,34 +34,31 @@ class PhotoBoothController extends StateNotifier<PhotoBoothState> {
       );
 
       await _cameraController!.initialize();
-      state = const PhotoBoothState.data(
-        PhotoBoothData(
-          isCameraReady: true,
-        ),
-      );
+      state = const PhotoBoothState.data(isCameraReady: true);
     } catch (e) {
       state = PhotoBoothState.error(e.toString());
     }
   }
 
   Future<void> takePhoto() async {
-    final currentState = state;
-    if (currentState is! _Data) return;
     if (_cameraController == null) return;
 
-    try {
-      final xFile = await _cameraController!.takePicture();
-      final updatedPhotos = [...currentState.data.photosPaths, xFile.path];
+    state.whenOrNull(
+      data: (photosPaths, isPhotoGridComplete, isCameraReady) async {
+        try {
+          final xFile = await _cameraController!.takePicture();
+          final updatedPhotos = [...photosPaths, xFile.path];
 
-      state = PhotoBoothState.data(
-        currentState.data.copyWith(
-          photosPaths: updatedPhotos,
-          isPhotoGridComplete: updatedPhotos.length >= 4,
-        ),
-      );
-    } catch (e) {
-      state = PhotoBoothState.error(e.toString());
-    }
+          state = PhotoBoothState.data(
+            photosPaths: updatedPhotos,
+            isPhotoGridComplete: updatedPhotos.length >= 4,
+            isCameraReady: true,
+          );
+        } catch (e) {
+          state = PhotoBoothState.error(e.toString());
+        }
+      },
+    );
   }
 
   @override

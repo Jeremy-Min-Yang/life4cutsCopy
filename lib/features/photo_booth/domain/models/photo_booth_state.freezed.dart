@@ -20,21 +20,27 @@ mixin _$PhotoBoothState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(String message) error,
-    required TResult Function(PhotoBoothData data) data,
+    required TResult Function(List<String> photosPaths,
+            bool isPhotoGridComplete, bool isCameraReady)
+        data,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(String message)? error,
-    TResult? Function(PhotoBoothData data)? data,
+    TResult? Function(List<String> photosPaths, bool isPhotoGridComplete,
+            bool isCameraReady)?
+        data,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(String message)? error,
-    TResult Function(PhotoBoothData data)? data,
+    TResult Function(List<String> photosPaths, bool isPhotoGridComplete,
+            bool isCameraReady)?
+        data,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -126,7 +132,9 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(String message) error,
-    required TResult Function(PhotoBoothData data) data,
+    required TResult Function(List<String> photosPaths,
+            bool isPhotoGridComplete, bool isCameraReady)
+        data,
   }) {
     return loading();
   }
@@ -136,7 +144,9 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(String message)? error,
-    TResult? Function(PhotoBoothData data)? data,
+    TResult? Function(List<String> photosPaths, bool isPhotoGridComplete,
+            bool isCameraReady)?
+        data,
   }) {
     return loading?.call();
   }
@@ -146,7 +156,9 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(String message)? error,
-    TResult Function(PhotoBoothData data)? data,
+    TResult Function(List<String> photosPaths, bool isPhotoGridComplete,
+            bool isCameraReady)?
+        data,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -264,7 +276,9 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(String message) error,
-    required TResult Function(PhotoBoothData data) data,
+    required TResult Function(List<String> photosPaths,
+            bool isPhotoGridComplete, bool isCameraReady)
+        data,
   }) {
     return error(message);
   }
@@ -274,7 +288,9 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(String message)? error,
-    TResult? Function(PhotoBoothData data)? data,
+    TResult? Function(List<String> photosPaths, bool isPhotoGridComplete,
+            bool isCameraReady)?
+        data,
   }) {
     return error?.call(message);
   }
@@ -284,7 +300,9 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(String message)? error,
-    TResult Function(PhotoBoothData data)? data,
+    TResult Function(List<String> photosPaths, bool isPhotoGridComplete,
+            bool isCameraReady)?
+        data,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -346,9 +364,8 @@ abstract class _$$DataImplCopyWith<$Res> {
           _$DataImpl value, $Res Function(_$DataImpl) then) =
       __$$DataImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({PhotoBoothData data});
-
-  $PhotoBoothDataCopyWith<$Res> get data;
+  $Res call(
+      {List<String> photosPaths, bool isPhotoGridComplete, bool isCameraReady});
 }
 
 /// @nodoc
@@ -363,38 +380,55 @@ class __$$DataImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? data = null,
+    Object? photosPaths = null,
+    Object? isPhotoGridComplete = null,
+    Object? isCameraReady = null,
   }) {
     return _then(_$DataImpl(
-      null == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as PhotoBoothData,
+      photosPaths: null == photosPaths
+          ? _value._photosPaths
+          : photosPaths // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      isPhotoGridComplete: null == isPhotoGridComplete
+          ? _value.isPhotoGridComplete
+          : isPhotoGridComplete // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isCameraReady: null == isCameraReady
+          ? _value.isCameraReady
+          : isCameraReady // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
-  }
-
-  /// Create a copy of PhotoBoothState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $PhotoBoothDataCopyWith<$Res> get data {
-    return $PhotoBoothDataCopyWith<$Res>(_value.data, (value) {
-      return _then(_value.copyWith(data: value));
-    });
   }
 }
 
 /// @nodoc
 
 class _$DataImpl implements _Data {
-  const _$DataImpl(this.data);
+  const _$DataImpl(
+      {final List<String> photosPaths = const [],
+      this.isPhotoGridComplete = false,
+      this.isCameraReady = false})
+      : _photosPaths = photosPaths;
+
+  final List<String> _photosPaths;
+  @override
+  @JsonKey()
+  List<String> get photosPaths {
+    if (_photosPaths is EqualUnmodifiableListView) return _photosPaths;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_photosPaths);
+  }
 
   @override
-  final PhotoBoothData data;
+  @JsonKey()
+  final bool isPhotoGridComplete;
+  @override
+  @JsonKey()
+  final bool isCameraReady;
 
   @override
   String toString() {
-    return 'PhotoBoothState.data(data: $data)';
+    return 'PhotoBoothState.data(photosPaths: $photosPaths, isPhotoGridComplete: $isPhotoGridComplete, isCameraReady: $isCameraReady)';
   }
 
   @override
@@ -402,11 +436,20 @@ class _$DataImpl implements _Data {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DataImpl &&
-            (identical(other.data, data) || other.data == data));
+            const DeepCollectionEquality()
+                .equals(other._photosPaths, _photosPaths) &&
+            (identical(other.isPhotoGridComplete, isPhotoGridComplete) ||
+                other.isPhotoGridComplete == isPhotoGridComplete) &&
+            (identical(other.isCameraReady, isCameraReady) ||
+                other.isCameraReady == isCameraReady));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, data);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_photosPaths),
+      isPhotoGridComplete,
+      isCameraReady);
 
   /// Create a copy of PhotoBoothState
   /// with the given fields replaced by the non-null parameter values.
@@ -421,9 +464,11 @@ class _$DataImpl implements _Data {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(String message) error,
-    required TResult Function(PhotoBoothData data) data,
+    required TResult Function(List<String> photosPaths,
+            bool isPhotoGridComplete, bool isCameraReady)
+        data,
   }) {
-    return data(this.data);
+    return data(photosPaths, isPhotoGridComplete, isCameraReady);
   }
 
   @override
@@ -431,9 +476,11 @@ class _$DataImpl implements _Data {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(String message)? error,
-    TResult? Function(PhotoBoothData data)? data,
+    TResult? Function(List<String> photosPaths, bool isPhotoGridComplete,
+            bool isCameraReady)?
+        data,
   }) {
-    return data?.call(this.data);
+    return data?.call(photosPaths, isPhotoGridComplete, isCameraReady);
   }
 
   @override
@@ -441,11 +488,13 @@ class _$DataImpl implements _Data {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(String message)? error,
-    TResult Function(PhotoBoothData data)? data,
+    TResult Function(List<String> photosPaths, bool isPhotoGridComplete,
+            bool isCameraReady)?
+        data,
     required TResult orElse(),
   }) {
     if (data != null) {
-      return data(this.data);
+      return data(photosPaths, isPhotoGridComplete, isCameraReady);
     }
     return orElse();
   }
@@ -486,199 +535,18 @@ class _$DataImpl implements _Data {
 }
 
 abstract class _Data implements PhotoBoothState {
-  const factory _Data(final PhotoBoothData data) = _$DataImpl;
+  const factory _Data(
+      {final List<String> photosPaths,
+      final bool isPhotoGridComplete,
+      final bool isCameraReady}) = _$DataImpl;
 
-  PhotoBoothData get data;
+  List<String> get photosPaths;
+  bool get isPhotoGridComplete;
+  bool get isCameraReady;
 
   /// Create a copy of PhotoBoothState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DataImplCopyWith<_$DataImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$PhotoBoothData {
-  List<String> get photosPaths => throw _privateConstructorUsedError;
-  bool get isPhotoGridComplete => throw _privateConstructorUsedError;
-  bool get isCameraReady => throw _privateConstructorUsedError;
-
-  /// Create a copy of PhotoBoothData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $PhotoBoothDataCopyWith<PhotoBoothData> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PhotoBoothDataCopyWith<$Res> {
-  factory $PhotoBoothDataCopyWith(
-          PhotoBoothData value, $Res Function(PhotoBoothData) then) =
-      _$PhotoBoothDataCopyWithImpl<$Res, PhotoBoothData>;
-  @useResult
-  $Res call(
-      {List<String> photosPaths, bool isPhotoGridComplete, bool isCameraReady});
-}
-
-/// @nodoc
-class _$PhotoBoothDataCopyWithImpl<$Res, $Val extends PhotoBoothData>
-    implements $PhotoBoothDataCopyWith<$Res> {
-  _$PhotoBoothDataCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of PhotoBoothData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? photosPaths = null,
-    Object? isPhotoGridComplete = null,
-    Object? isCameraReady = null,
-  }) {
-    return _then(_value.copyWith(
-      photosPaths: null == photosPaths
-          ? _value.photosPaths
-          : photosPaths // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      isPhotoGridComplete: null == isPhotoGridComplete
-          ? _value.isPhotoGridComplete
-          : isPhotoGridComplete // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isCameraReady: null == isCameraReady
-          ? _value.isCameraReady
-          : isCameraReady // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$PhotoBoothDataImplCopyWith<$Res>
-    implements $PhotoBoothDataCopyWith<$Res> {
-  factory _$$PhotoBoothDataImplCopyWith(_$PhotoBoothDataImpl value,
-          $Res Function(_$PhotoBoothDataImpl) then) =
-      __$$PhotoBoothDataImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {List<String> photosPaths, bool isPhotoGridComplete, bool isCameraReady});
-}
-
-/// @nodoc
-class __$$PhotoBoothDataImplCopyWithImpl<$Res>
-    extends _$PhotoBoothDataCopyWithImpl<$Res, _$PhotoBoothDataImpl>
-    implements _$$PhotoBoothDataImplCopyWith<$Res> {
-  __$$PhotoBoothDataImplCopyWithImpl(
-      _$PhotoBoothDataImpl _value, $Res Function(_$PhotoBoothDataImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of PhotoBoothData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? photosPaths = null,
-    Object? isPhotoGridComplete = null,
-    Object? isCameraReady = null,
-  }) {
-    return _then(_$PhotoBoothDataImpl(
-      photosPaths: null == photosPaths
-          ? _value._photosPaths
-          : photosPaths // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      isPhotoGridComplete: null == isPhotoGridComplete
-          ? _value.isPhotoGridComplete
-          : isPhotoGridComplete // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isCameraReady: null == isCameraReady
-          ? _value.isCameraReady
-          : isCameraReady // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$PhotoBoothDataImpl implements _PhotoBoothData {
-  const _$PhotoBoothDataImpl(
-      {final List<String> photosPaths = const [],
-      this.isPhotoGridComplete = false,
-      this.isCameraReady = false})
-      : _photosPaths = photosPaths;
-
-  final List<String> _photosPaths;
-  @override
-  @JsonKey()
-  List<String> get photosPaths {
-    if (_photosPaths is EqualUnmodifiableListView) return _photosPaths;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_photosPaths);
-  }
-
-  @override
-  @JsonKey()
-  final bool isPhotoGridComplete;
-  @override
-  @JsonKey()
-  final bool isCameraReady;
-
-  @override
-  String toString() {
-    return 'PhotoBoothData(photosPaths: $photosPaths, isPhotoGridComplete: $isPhotoGridComplete, isCameraReady: $isCameraReady)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PhotoBoothDataImpl &&
-            const DeepCollectionEquality()
-                .equals(other._photosPaths, _photosPaths) &&
-            (identical(other.isPhotoGridComplete, isPhotoGridComplete) ||
-                other.isPhotoGridComplete == isPhotoGridComplete) &&
-            (identical(other.isCameraReady, isCameraReady) ||
-                other.isCameraReady == isCameraReady));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_photosPaths),
-      isPhotoGridComplete,
-      isCameraReady);
-
-  /// Create a copy of PhotoBoothData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$PhotoBoothDataImplCopyWith<_$PhotoBoothDataImpl> get copyWith =>
-      __$$PhotoBoothDataImplCopyWithImpl<_$PhotoBoothDataImpl>(
-          this, _$identity);
-}
-
-abstract class _PhotoBoothData implements PhotoBoothData {
-  const factory _PhotoBoothData(
-      {final List<String> photosPaths,
-      final bool isPhotoGridComplete,
-      final bool isCameraReady}) = _$PhotoBoothDataImpl;
-
-  @override
-  List<String> get photosPaths;
-  @override
-  bool get isPhotoGridComplete;
-  @override
-  bool get isCameraReady;
-
-  /// Create a copy of PhotoBoothData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PhotoBoothDataImplCopyWith<_$PhotoBoothDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -13,14 +13,15 @@ class PhotoGridWidget extends ConsumerWidget {
     return photoBoothState.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error) => Center(child: Text('Error: $error')),
-      data: (data) => GridView.builder(
+      data: (photosPaths, isPhotoGridComplete, isCameraReady) =>
+          GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 3 / 4,
         ),
-        itemCount: data.photosPaths.length,
+        itemCount: photosPaths.length,
         itemBuilder: (context, index) => Image.file(
-          File(data.photosPaths[index]),
+          File(photosPaths[index]),
           fit: BoxFit.cover,
         ),
       ),
