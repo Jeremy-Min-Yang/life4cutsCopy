@@ -644,13 +644,13 @@
       "languageVersion": "3.4"
     },
     {
-      "name": "photo_card_maker",
+      "name": "four_cuts",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2025-03-11T06:50:21.787389Z",
+  "generated": "2025-03-12T00:53:29.600932Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///C:/flutter/src/flutter",

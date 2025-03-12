@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:photo_card_maker/features/photo_booth/presentation/controllers/photo_booth_controller.dart';
-import 'package:photo_card_maker/features/photo_booth/domain/models/photo_booth_state.dart';
+import 'package:four_cuts/features/photo_booth/presentation/controllers/photo_booth_controller.dart';
+import 'package:four_cuts/features/photo_booth/domain/models/photo_booth_state.dart';
 
 void main() {
   late ProviderContainer container;

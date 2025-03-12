@@ -1,5 +1,5 @@
-name: photo_card_maker
-description: A photo card creation app similar to life4cuts
+name: four_cuts
+description: A photo card creation app similar to 인생넷컷
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

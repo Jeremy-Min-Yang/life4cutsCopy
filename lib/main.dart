@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:photo_card_maker/features/photo_booth/presentation/screens/photo_booth_screen.dart';
+import 'package:four_cuts/features/photo_booth/presentation/screens/photo_booth_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
