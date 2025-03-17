@@ -1,0 +1,2 @@
+C:/Users/jerem/Desktop/four_cuts/android/app/.cxx/Debug/6m3q2med/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/jerem/Desktop/four_cuts/android/app/.cxx/Debug/6m3q2med/armeabi-v7a/CMakeFiles/rebuild_cache.dir
