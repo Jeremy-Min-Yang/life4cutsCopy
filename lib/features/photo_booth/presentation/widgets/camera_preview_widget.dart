@@ -9,18 +9,50 @@ class CameraPreviewWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final photoBoothState = ref.watch(photoBoothControllerProvider);
+    final controller =
+        ref.read(photoBoothControllerProvider.notifier).cameraController;
 
     return photoBoothState.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error) => Center(child: Text('Camera Error: $error')),
       data: (photosPaths, isPhotoGridComplete, isCameraReady) => isCameraReady
-          ? AspectRatio(
-              aspectRatio: 3 / 4,
-              child: CameraPreview(
-                ref
-                    .read(photoBoothControllerProvider.notifier)
-                    .cameraController!,
-              ),
+          ? Stack(
+              children: [
+                AspectRatio(
+                  aspectRatio: 3 / 4,
+                  child: Transform.scale(
+                    scaleX: controller?.description.lensDirection ==
+                            CameraLensDirection.front
+                        ? -1.0
+                        : 1.0,
+                    child: CameraPreview(
+                      controller!,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 16,
+                  right: 16,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.5),
+                      shape: BoxShape.circle,
+                    ),
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.flip_camera_ios,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                      onPressed: () {
+                        ref
+                            .read(photoBoothControllerProvider.notifier)
+                            .switchCamera();
+                      },
+                    ),
+                  ),
+                ),
+              ],
             )
           : const Center(child: Text('Initializing camera...')),
     );
