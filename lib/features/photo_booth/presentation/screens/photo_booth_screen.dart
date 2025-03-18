@@ -108,33 +108,98 @@ class _PhotoBoothScreenState extends ConsumerState<PhotoBoothScreen> {
       List<String> photosPaths, bool isPhotoGridComplete, bool isCameraReady) {
     return Stack(
       children: [
-        Column(
-          children: [
-            if (!isPhotoGridComplete) ...[
+        // Full screen dark background
+        Container(
+          color: Colors.black.withOpacity(0.5),
+        ),
+
+        if (!isPhotoGridComplete)
+          Column(
+            children: [
+              // Top timer bar - fixed height
               PhotoBoothOverlay(
-                currentPhotoNumber: photosPaths.length + 1,
                 secondsRemaining: _secondsRemaining,
                 isCountingDown: _isCountingDown,
               ),
-              const Expanded(child: CameraPreviewWidget()),
-              Container(
-                height: 80,
-                color: Colors.black.withOpacity(0.5),
-                child: const Center(
-                  child: Text(
-                    'Get Ready!',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+              // Camera view - takes remaining space
+              Expanded(
+                child: Center(
+                  child: FractionallySizedBox(
+                    widthFactor: 0.9, // 90% of available width
+                    heightFactor: 0.9, // 90% of available height
+                    child: const CameraPreviewWidget(),
                   ),
                 ),
               ),
-            ] else
-              const Expanded(child: PhotoGridWidget()),
-          ],
-        ),
+              // Bottom indicator bar - adaptive height
+              Container(
+                height: 60,
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Switch camera button
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 6),
+                          ),
+                          onPressed: () {
+                            ref
+                                .read(photoBoothControllerProvider.notifier)
+                                .switchCamera();
+                          },
+                          child: const Text(
+                            'Switch Camera',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Photo indicators
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            for (int i = 0; i < 4; i++)
+                              Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 4),
+                                width: 16,
+                                height: 16,
+                                decoration: BoxDecoration(
+                                  color: i < photosPaths.length
+                                      ? Colors.green
+                                      : Colors.white.withOpacity(0.5),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          )
+        else
+          const Expanded(child: PhotoGridWidget()),
+
         // Flash overlay
         if (_showFlash)
           Positioned.fill(

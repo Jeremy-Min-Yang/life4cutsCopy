@@ -59,7 +59,23 @@ class PhotoBoothController extends StateNotifier<PhotoBoothState> {
     try {
       await _cameraController!.initialize();
       await _cameraController!.lockCaptureOrientation();
-      state = const PhotoBoothState.data(isCameraReady: true);
+
+      // Preserve existing photos when switching cameras
+      List<String> existingPhotos = [];
+      bool isComplete = false;
+
+      state.whenOrNull(
+        data: (photosPaths, isPhotoGridComplete, _) {
+          existingPhotos = photosPaths;
+          isComplete = isPhotoGridComplete;
+        },
+      );
+
+      state = PhotoBoothState.data(
+        photosPaths: existingPhotos,
+        isPhotoGridComplete: isComplete,
+        isCameraReady: true,
+      );
     } catch (e) {
       state = PhotoBoothState.error(e.toString());
     }

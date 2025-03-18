@@ -17,38 +17,20 @@ class CameraPreviewWidget extends ConsumerWidget {
       error: (error) => Center(child: Text('Camera Error: $error')),
       data: (photosPaths, isPhotoGridComplete, isCameraReady) => isCameraReady
           ? Stack(
+              fit: StackFit.expand,
               children: [
-                AspectRatio(
-                  aspectRatio: 3 / 4,
-                  child: Transform.scale(
-                    scaleX: controller?.description.lensDirection ==
-                            CameraLensDirection.front
-                        ? -1.0
-                        : 1.0,
-                    child: CameraPreview(
-                      controller!,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 16,
-                  right: 16,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        ref
-                            .read(photoBoothControllerProvider.notifier)
-                            .switchCamera();
-                      },
-                      child: const Text(
-                        'Switch',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: AspectRatio(
+                      aspectRatio: 3 / 4,
+                      child: Transform.scale(
+                        scaleX: controller?.description.lensDirection ==
+                                CameraLensDirection.front
+                            ? -1.0
+                            : 1.0,
+                        child: CameraPreview(
+                          controller!,
                         ),
                       ),
                     ),
