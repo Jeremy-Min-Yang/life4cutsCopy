@@ -164,6 +164,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "cupertino_icons",
+      "rootUri": "file:///C:/Users/jerem/AppData/Local/Pub/Cache/hosted/pub.dev/cupertino_icons-1.0.8",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
       "name": "dart_style",
       "rootUri": "file:///C:/Users/jerem/AppData/Local/Pub/Cache/hosted/pub.dev/dart_style-3.0.1",
       "packageUri": "lib/",
@@ -644,7 +650,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2025-03-17T22:54:48.539311Z",
+  "generated": "2025-03-18T07:26:48.643411Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///C:/flutter/src/flutter",

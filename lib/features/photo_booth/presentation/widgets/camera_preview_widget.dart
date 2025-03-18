@@ -36,19 +36,21 @@ class CameraPreviewWidget extends ConsumerWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.5),
-                      shape: BoxShape.circle,
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    child: IconButton(
-                      icon: const Icon(
-                        Icons.flip_camera_ios,
-                        color: Colors.white,
-                        size: 30,
-                      ),
+                    child: TextButton(
                       onPressed: () {
                         ref
                             .read(photoBoothControllerProvider.notifier)
                             .switchCamera();
                       },
+                      child: const Text(
+                        'Switch',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
                 ),
