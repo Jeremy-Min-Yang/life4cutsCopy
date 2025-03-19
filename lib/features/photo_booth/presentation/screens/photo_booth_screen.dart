@@ -74,7 +74,10 @@ class _PhotoBoothScreenState extends ConsumerState<PhotoBoothScreen> {
         final photoBoothState = ref.read(photoBoothControllerProvider);
         photoBoothState.whenOrNull(
           data: (photosPaths, isPhotoGridComplete, isCameraReady) {
-            if (!isPhotoGridComplete && isCameraReady) {
+            // Only start the next countdown if the grid is NOT complete
+            if (!isPhotoGridComplete &&
+                photosPaths.length < 4 &&
+                isCameraReady) {
               // Start next countdown
               Future.delayed(const Duration(milliseconds: 700), () {
                 if (mounted) {

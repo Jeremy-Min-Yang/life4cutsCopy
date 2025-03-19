@@ -93,13 +93,16 @@ class PhotoBoothController extends StateNotifier<PhotoBoothState> {
 
     state.whenOrNull(
       data: (photosPaths, isPhotoGridComplete, isCameraReady) async {
+        // Don't take more photos if we already have 4
+        if (photosPaths.length >= 4) return;
+
         try {
           final xFile = await _cameraController!.takePicture();
           final updatedPhotos = [...photosPaths, xFile.path];
 
           state = PhotoBoothState.data(
             photosPaths: updatedPhotos,
-            isPhotoGridComplete: updatedPhotos.length >= 4,
+            isPhotoGridComplete: updatedPhotos.length == 4,
             isCameraReady: true,
           );
         } catch (e) {
