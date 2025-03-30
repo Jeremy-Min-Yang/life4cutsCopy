@@ -77,48 +77,54 @@ class _PhotoBoothScreenState extends ConsumerState<PhotoBoothScreen> {
       _showFlash = true;
     });
 
-    // Take picture
-    ref.read(photoBoothControllerProvider.notifier).takePhoto();
-
-    // Hide flash after a short delay
-    Future.delayed(const Duration(milliseconds: 300), () {
-      if (mounted) {
-        setState(() {
-          _showFlash = false;
-        });
-
-        // Check if we need to start another countdown
-        final photoBoothState = ref.read(photoBoothControllerProvider);
-        photoBoothState.whenOrNull(
-          data: (photosPaths, isPhotoGridComplete, isCameraReady) {
-            // Check if the grid is complete (4 photos taken)
-            if (isPhotoGridComplete) {
-              // Navigate to layout selection screen
-              Future.delayed(const Duration(milliseconds: 700), () {
-                if (mounted) {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => LayoutSelectionScreen(
-                        photosPaths: photosPaths,
-                      ),
-                    ),
-                  );
-                }
-              });
-            } else if (!isPhotoGridComplete &&
-                photosPaths.length < 4 &&
-                isCameraReady) {
-              // Only start the next countdown if the grid is NOT complete
-              Future.delayed(const Duration(milliseconds: 700), () {
-                if (mounted) {
-                  _startCountdown();
-                }
-              });
+    // Check if we already have 4 photos before taking another one
+    final photoBoothState = ref.read(photoBoothControllerProvider);
+    photoBoothState.whenOrNull(
+      data: (photosPaths, isPhotoGridComplete, isCameraReady) {
+        if (photosPaths.length >= 4) {
+          // If we already have 4 photos, navigate to layout selection
+          Future.delayed(const Duration(milliseconds: 700), () {
+            if (mounted) {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => LayoutSelectionScreen(
+                    photosPaths: photosPaths,
+                  ),
+                ),
+              );
             }
-          },
-        );
-      }
-    });
+          });
+          return;
+        }
+
+        // Take picture if we have less than 4 photos
+        ref.read(photoBoothControllerProvider.notifier).takePhoto();
+
+        // Hide flash after a short delay
+        Future.delayed(const Duration(milliseconds: 300), () {
+          if (mounted) {
+            setState(() {
+              _showFlash = false;
+            });
+
+            // Check if we need to start another countdown
+            final updatedState = ref.read(photoBoothControllerProvider);
+            updatedState.whenOrNull(
+              data: (updatedPhotosPaths, isComplete, isReady) {
+                if (!isComplete && updatedPhotosPaths.length < 4 && isReady) {
+                  // Only start the next countdown if we have less than 4 photos
+                  Future.delayed(const Duration(milliseconds: 700), () {
+                    if (mounted) {
+                      _startCountdown();
+                    }
+                  });
+                }
+              },
+            );
+          }
+        });
+      },
+    );
   }
 
   @override
